@@ -4,14 +4,22 @@ from django.views.generic import ListView
 from order.models import Author
 from .forms import AuthorForm
 from .models import Author
-from rest_framework import viewsets
+from rest_framework import generics
 from .serializers import AuthorSerializer
 
 
-class AuthorViewAPI(viewsets.ModelViewSet):
+# class AuthorViewAPI(viewsets.ModelViewSet):
+#     queryset = Author.objects.all()
+#     serializer_class = AuthorSerializer
+ 
+class AuthorViewAPI(generics.ListAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    
+
+
+class AuthorDetailViewAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer   
 
 # class AuthorList(ListView):
 #

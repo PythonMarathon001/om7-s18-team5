@@ -6,13 +6,18 @@ from author.models import Author
 from authentication.models import CustomUser 
 from django.db.models import Q
 from django.views.generic import ListView
-from rest_framework import viewsets
+from rest_framework import generics
 from .serializers import BookSerializer
 
 
-class BookViewAPI(viewsets.ModelViewSet):
+class BookViewAPI(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+
+
+class BookDetailViewAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer      
     
 class BookListSearch(ListView):
     
