@@ -60,10 +60,10 @@ def author_create(request, id=0):
             form=AuthorForm(request.POST,instance=author)
         if form.is_valid():
             form.save()
-        return redirect('/author/list')
+        return redirect('author_list')
 
 
 def author_delete(request,id):
     author = Author.objects.get(pk=id)
     author.delete()
-    return redirect('/author/list')
+    return redirect('author_list')
