@@ -44,10 +44,7 @@ INSTALLED_APPS = [
     'order',
     'crispy_forms',
     'rest_framework',
-<<<<<<< HEAD
     'rest_framework_swagger',
-=======
->>>>>>> origin/rest_test
 ]
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
