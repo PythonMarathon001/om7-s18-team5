@@ -8,6 +8,7 @@ from .forms import CustomUserForm
 from .models import CustomUser
 from rest_framework import generics
 from .serializers import *
+from order.serializers import *
 
 
 class UserView(generics.ListCreateAPIView):
@@ -20,31 +21,46 @@ class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserDetailSerializer
 
 
-# class UserList(ListView):
-#
-#     model = CustomUser
-#     template_name = "authentication/index.html"
-#     context_object_name = "users"
-#
-#     def get(self, request, *args, **kwargs):
-#
-#         return ListView.get(self, request, *args, **kwargs)
-#
-#
-#     def get_context_data(self, **kwargs):
-#
-#         context = super(UserList, self).get_context_data(**kwargs)
-#         context['title'] = 'Список читачів'
-#         context['content_title'] = 'Адміністрування бібліотеки / Читачі'
-#
-#         return context
-#
-#     def get_queryset(self):
-#
-#         queryset = CustomUser.get_all()
-#
-#         return queryset
-#
+class UserOrderListView(generics.ListAPIView):
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        id_from_url = self.request.path
+        user = id_from_url.split('/')[4]
+        queryset = Order.objects.filter(user=int(user))
+        return queryset
+
+
+class UserOrderDetailView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderDetailSerializer
+
+    # class UserList(ListView):
+    #
+    #     model = CustomUser
+    #     template_name = "authentication/index.html"
+    #     context_object_name = "users"
+    #
+    #     def get(self, request, *args, **kwargs):
+    #
+    #         return ListView.get(self, request, *args, **kwargs)
+    #
+    #
+    #     def get_context_data(self, **kwargs):
+    #
+    #         context = super(UserList, self).get_context_data(**kwargs)
+    #         context['title'] = 'Список читачів'
+    #         context['content_title'] = 'Адміністрування бібліотеки / Читачі'
+    #
+    #         return context
+    #
+    #     def get_queryset(self):
+    #
+    #         queryset = CustomUser.get_all()
+    #
+    #         return queryset
+    #
+
 
 def overdue(request):
 

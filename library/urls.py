@@ -7,7 +7,6 @@ schema_view = get_swagger_view(title='DreamLibra API')
 
 urlpatterns = [
     path('', index, name='index'),
-    path('swagger', schema_view, name="swagger"),
     path('author/', include("author.urls"), name="author"),
     path('book/',   include("book.urls")),
     path('order/',  include("order.urls"), name="order"),
@@ -20,4 +19,11 @@ urlpatterns = [
     path('rules/', rules, name="rules"),
     path('reconstruction/', reconstruction, name="reconstruction"), 
     path('admin/', admin.site.urls),
+    path('swagger', schema_view, name="swagger"),
+    # path('user/',   include("authentication.urls"), name="user"),
+    # path('author/', include("author.urls"), name="author"),
+    # path('book/',   include("book.urls")),
+    # path('order/',  include("order.urls"), name="order"),
+    # path('author/', include("author.urls")),
+    # path('book/', include("book.urls")),   
 ]
