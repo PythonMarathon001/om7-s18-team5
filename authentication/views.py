@@ -6,6 +6,19 @@ from django.db.models import Q
 from django.views.generic import ListView
 from .forms import CustomUserForm
 from .models import CustomUser
+from rest_framework import generics
+from .serializers import *
+
+
+class UserView(generics.ListCreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserDetailSerializer
+
 
 # class UserList(ListView):
 #
@@ -35,26 +48,24 @@ from .models import CustomUser
 
 def overdue(request):
 
-    users = CustomUser.objects.filter(Q(order__plated_end_at__lte=Now()) & Q(order__end_at__isnull = True))
-    
+    users = CustomUser.objects.filter(
+        Q(order__plated_end_at__lte=Now()) & Q(order__end_at__isnull=True))
+
     context = {}
     context['title'] = 'Список читачів'
     context['content_title'] = 'Адміністрування бібліотеки / Читачі'
     context['users'] = users
 
-
     return render(request, 'authentication/index.html', context)
 
 
-
-
-##### new
-
+# new
 
 
 def user_list(request):
-    context = {'user_list':CustomUser.objects.all()}
-    return render(request,'authentication/user_list.html', context)
+    context = {'user_list': CustomUser.objects.all()}
+    return render(request, 'authentication/user_list.html', context)
+
 
 def user_create(request, id=0):
     if request.method == "GET":
@@ -63,19 +74,19 @@ def user_create(request, id=0):
         else:
             user = CustomUser.objects.get(pk=id)
             form = CustomUserForm(instance=user)
-        return render(request, 'authentication/user_create.html', {'form':form})
+        return render(request, 'authentication/user_create.html', {'form': form})
     else:
         if id == 0:
             form = CustomUserForm(request.POST)
         else:
             user = CustomUser.objects.get(pk=id)
-            form=CustomUserForm(request.POST,instance=user)
+            form = CustomUserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
-        return redirect('/user/list')
+        return redirect('order_list')
 
 
-def user_delete(request,id):
+def user_delete(request, id):
     user = CustomUser.objects.get(pk=id)
     user.delete()
-    return redirect('/user/list')
+    return redirect('order_list')
