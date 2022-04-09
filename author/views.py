@@ -1,8 +1,17 @@
+from django import views
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from order.models import Author
 from .forms import AuthorForm
 from .models import Author
+from rest_framework import viewsets
+from .serializers import AuthorSerializer
+
+
+class AuthorViewAPI(viewsets.ModelViewSet):
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+    
 
 # class AuthorList(ListView):
 #
