@@ -43,7 +43,17 @@ INSTALLED_APPS = [
     'book',
     'order',
     'crispy_forms',
+    'rest_framework',
+    'rest_framework_swagger',
+    
 ]
+
+REST_FRAMEWORK = { 
+                    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+                    'DEFAULT_PERMISSION_CLASSES': [
+                        'rest_framework.permissions.AllowAny',
+                                                ]
+                  }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +80,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries' : {
+                'staticfiles': 'django.templatetags.static', 
+            }
         },
     },
 ]

@@ -1,8 +1,27 @@
+from django import views
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from order.models import Author
 from .forms import AuthorForm
 from .models import Author
+from rest_framework import generics, permissions
+from .serializers import AuthorSerializer
+
+
+# class AuthorViewAPI(viewsets.ModelViewSet):
+#     queryset = Author.objects.all()
+#     serializer_class = AuthorSerializer
+ 
+class AuthorViewAPI(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
+
+
+class AuthorDetailViewAPI(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer   
 
 # class AuthorList(ListView):
 #
@@ -51,10 +70,10 @@ def author_create(request, id=0):
             form=AuthorForm(request.POST,instance=author)
         if form.is_valid():
             form.save()
-        return redirect('/author/list')
+        return redirect('author_list')
 
 
 def author_delete(request,id):
     author = Author.objects.get(pk=id)
     author.delete()
-    return redirect('/author/list')
+    return redirect('author_list')

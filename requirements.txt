@@ -4,6 +4,7 @@ charset-normalizer==2.0.12
 distlib==0.3.4
 Django==4.0.3
 django-crispy-forms==1.14.0
+django-rest-swagger==2.2.0
 filelock==3.6.0
 idna==3.3
 platformdirs==2.5.1

@@ -6,7 +6,21 @@ from author.models import Author
 from authentication.models import CustomUser 
 from django.db.models import Q
 from django.views.generic import ListView
+from rest_framework import generics, permissions
+from .serializers import BookSerializer
 
+
+class BookViewAPI(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookDetailViewAPI(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer      
+    
 class BookListSearch(ListView):
     
     model = Book
