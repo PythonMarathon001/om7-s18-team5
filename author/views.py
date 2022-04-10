@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from order.models import Author
 from .forms import AuthorForm
 from .models import Author
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .serializers import AuthorSerializer
 
 
@@ -12,12 +12,14 @@ from .serializers import AuthorSerializer
 #     queryset = Author.objects.all()
 #     serializer_class = AuthorSerializer
  
-class AuthorViewAPI(generics.ListAPIView):
+class AuthorViewAPI(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
 
-class AuthorDetailViewAPI(generics.RetrieveUpdateDestroyAPIView):
+class AuthorDetailViewAPI(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer   
 

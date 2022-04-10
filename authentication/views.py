@@ -6,17 +6,19 @@ from django.db.models import Q
 from django.views.generic import ListView
 from .forms import CustomUserForm
 from .models import CustomUser
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .serializers import *
 from order.serializers import *
 
 
 class UserView(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 
-class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = CustomUser.objects.all()
     serializer_class = UserDetailSerializer
 

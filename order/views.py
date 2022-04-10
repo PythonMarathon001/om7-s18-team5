@@ -3,16 +3,18 @@ from order.forms import OrderForm
 from django.views.generic import ListView
 from .forms import OrderForm
 from order.models import Order
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .serializers import *
 
 
 class OrderView(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 
-class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
+class OrderDetailView(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (permissions.AllowAny,)
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
