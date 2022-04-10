@@ -11,12 +11,12 @@ from .serializers import *
 from order.serializers import *
 
 
-class UserView(generics.ListAPIView):
+class UserView(generics.ListCreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 
-class UserDetailView(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserDetailSerializer
 

@@ -7,12 +7,12 @@ from rest_framework import generics, permissions
 from .serializers import *
 
 
-class OrderView(generics.ListAPIView):
+class OrderView(generics.ListCreateAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
 
-class OrderDetailView(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
