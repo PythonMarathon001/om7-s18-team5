@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.UserView.as_view()),
     path('<int:pk>', views.UserDetailView.as_view()),
     path('<int:user>/order/', views.UserOrderListView.as_view()),
-    path('<int:user>/order/<int:order>', views.UserOrderDetailView.as_view()),
+    path('<int:user>/order/<int:pk>', views.UserOrderDetailView.as_view()),
     path('add/', user_create, name='user_insert'),
     path('overdue/', overdue, name='overdue'),
     path('update/<int:id>/', user_create, name='user_update'),

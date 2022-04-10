@@ -22,7 +22,7 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserDetailSerializer
 
 
-class UserOrderListView(generics.ListCreateAPIView):
+class UserOrderListView(generics.ListAPIView):
     serializer_class = OrderSerializer
 
     def get_queryset(self):
@@ -31,9 +31,9 @@ class UserOrderListView(generics.ListCreateAPIView):
     print(request.DataHandler)
 
 
-class UserOrderDetailView(generics.ListAPIView):
+class UserOrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
-        queryset = Order.objects.filter(pk=self.kwargs['order'],user = self.kwargs['user'])
+        queryset = Order.objects.filter(id=self.kwargs['pk'],user = self.kwargs['user'])
         return queryset
     serializer_class = OrderDetailSerializer
 
