@@ -11,14 +11,12 @@ from .serializers import *
 from order.serializers import *
 
 
-class UserView(generics.ListCreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+class UserView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 
 class UserDetailView(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.AllowAny,)
     queryset = CustomUser.objects.all()
     serializer_class = UserDetailSerializer
 

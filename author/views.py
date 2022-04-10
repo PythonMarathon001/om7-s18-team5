@@ -12,14 +12,12 @@ from .serializers import AuthorSerializer
 #     queryset = Author.objects.all()
 #     serializer_class = AuthorSerializer
  
-class AuthorViewAPI(generics.ListCreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+class AuthorViewAPI(generics.ListAPIView):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
 
 
 class AuthorDetailViewAPI(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.AllowAny,)
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer   
 
