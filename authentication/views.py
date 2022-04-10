@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render, redirect
 from order.models import Order
 from authentication.models import CustomUser
@@ -25,19 +26,14 @@ class UserOrderListView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
 
     def get_queryset(self):
-        id_from_url = self.request.path
-        user = id_from_url.split('/')[4]
-        queryset = Order.objects.filter(user=int(user))
+        queryset = Order.objects.filter(user= self.kwargs['user'])
         return queryset
+    print(request.DataHandler)
 
 
 class UserOrderDetailView(generics.ListAPIView):
     def get_queryset(self):
-        id_from_url = self.request.path
-        user = id_from_url.split('/')[4]
-        id = id_from_url.split('/')[6]
-        queryset = Order.objects.filter(pk=int(id),user = int(user))
-        print(queryset)
+        queryset = Order.objects.filter(pk=self.kwargs['order'],user = self.kwargs['user'])
         return queryset
     serializer_class = OrderDetailSerializer
 
