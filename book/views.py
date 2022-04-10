@@ -11,13 +11,11 @@ from .serializers import BookSerializer
 
 
 class BookViewAPI(generics.ListCreateAPIView):
-    permission_classes = (permissions.AllowAny,)
     queryset = Book.objects.all()
     serializer_class = BookSerializer
 
 
-class BookDetailViewAPI(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.AllowAny,)
+class BookDetailViewAPI(generics.RetrieveUpdateDestroyAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer      
     
