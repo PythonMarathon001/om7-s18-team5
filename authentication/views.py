@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.views.generic import ListView
 from .forms import CustomUserForm
 from .models import CustomUser
-from rest_framework import generics, permissions
+from rest_framework import generics
 from .serializers import *
 from order.serializers import *
 
@@ -22,24 +22,36 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserOrderListView(generics.ListCreateAPIView):
-    serializer_class = OrderSerializer
-
+    serializer_class = UserOrderSerializer
+    def perform_create(self, serializer):
+        serializer.save(user=CustomUser.objects.get(pk=self.kwargs['user_id']))
     def get_queryset(self):
-        id_from_url = self.request.path
-        user = id_from_url.split('/')[4]
-        queryset = Order.objects.filter(user=int(user))
+        filter = {}
+        data = self.kwargs
+        if data['user_id']:
+            filter['user__id'] = data['user_id']
+            
+        queryset = Order.objects.filter(**filter)
         return queryset
 
 
-class UserOrderDetailView(generics.ListAPIView):
-    def get_queryset(self):
-        id_from_url = self.request.path
-        user = id_from_url.split('/')[4]
-        id = id_from_url.split('/')[6]
-        queryset = Order.objects.filter(pk=int(id),user = int(user))
-        print(queryset)
+class UserOrderDetailView(generics.ListAPIView, generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserOrderSerializer
+    def perform_update(self, serializer):
+        serializer.save(user=CustomUser.objects.get(pk=self.kwargs['user_id']))
+    def get_queryset(self):       
+        filter = {}
+        data = self.kwargs
+        if data['pk']:
+            filter['pk'] = data['pk']        
+        if data['user_id']:
+            filter['user__id'] = data['user_id']
+            
+        queryset = Order.objects.filter(**filter)
+ 
         return queryset
-    serializer_class = OrderDetailSerializer
+    
+    
 
     # class UserList(ListView):
     #

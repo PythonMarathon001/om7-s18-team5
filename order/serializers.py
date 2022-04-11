@@ -11,6 +11,12 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = '__all__'
+        
+class UserOrderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
+        fields = ('pk', 'end_at', 'plated_end_at', 'book')
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
